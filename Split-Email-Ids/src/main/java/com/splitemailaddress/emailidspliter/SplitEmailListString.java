@@ -1,6 +1,5 @@
 package com.splitemailaddress.emailidspliter;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,6 +18,7 @@ public class SplitEmailListString {
 			count++;
 		System.out.println("Count: "+count);
 		String[] toArr = new String[400];
+		String lastIndex = "";
 		try {
 			for (int i = 1; i <= count; i++) {
 				if (i == count) {
@@ -32,14 +32,17 @@ public class SplitEmailListString {
 							System.out.println("First if's Else: "+x);*/
 					}
 				} else if (i == 1) {
-					toArr = (to.toString().split(",", 401));
+					toArr = (to.toString().split(", ", 4));
+					lastIndex = toArr[toArr.length-1];
+					toArr[toArr.length-1] = "";
 					flag = true;
 					/*for(String x : toArr)
 						System.out.println("Else if: "+x);*/
 				} else {
-					toArr = toArr[toArr.length - 1].split(",", 401);
+					toArr = toArr[toArr.length - 1].split(", ", 4);
+					lastIndex = toArr[toArr.length-1];
+					toArr[toArr.length-1] = "";
 					flag = true;
-					//System.out.println("To array length - 1 = "+(toArr.length - 1));
 					/*for(String x : toArr)
 						System.out.println("Else: "+x);*/
 				}
@@ -59,7 +62,7 @@ public class SplitEmailListString {
 						System.out.println("Success");
 					}
 				}*/
-				if(flag)
+				/*if(flag)
 				{
 					if(!sendMail(Arrays.copyOf(toArr, toArr.length-1)))
 					{
@@ -73,7 +76,25 @@ public class SplitEmailListString {
 					{
 						System.out.println("Success");
 					}
-				}	
+				}	*/
+				
+				if(flag)
+				{
+					if(!sendMail(toArr))
+					{
+						System.out.println("--------------------------------Success--------------------------------");
+					}
+					toArr[toArr.length-1] = lastIndex;
+					lastIndex = "";
+					flag = false;
+				}
+				else
+				{
+					if(!sendMail(toArr))
+					{
+						System.out.println("--------------------------------Success--------------------------------");
+					}
+				}
 				/*System.out
 						.println("splitEmailsAndSendMail -- Address setting in for loop -- iteration :"
 								+ i);*/
