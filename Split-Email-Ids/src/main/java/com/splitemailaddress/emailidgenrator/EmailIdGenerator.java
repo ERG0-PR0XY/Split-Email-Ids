@@ -16,10 +16,12 @@ public class EmailIdGenerator
 	{
 		List<String> emailIds = new ArrayList<String>();
 		int count = 0;
+		if(toAddress == null)
+			return null;
 		while(count<noOfEmailIds)
 		{
 			count++;
-			emailIds.add(count+toAddress);
+			emailIds.add(count+"--"+toAddress);
 		}
 		
 		StringBuffer mailIds = new StringBuffer("");
@@ -43,8 +45,10 @@ public class EmailIdGenerator
 			count++;
 			emailIds.add((count+"--"+toAddress));
 		}
-		
-		return emailIds;
+		if(emailIds != null && emailIds.size() > 0 && !((String)emailIds.get(0)).equalsIgnoreCase("null"))
+			return emailIds;
+		else
+			return null;
 	}
 	
 	public static String toEmailListStringBuilder(String toAddress, int noOfEmailIds)
@@ -54,7 +58,7 @@ public class EmailIdGenerator
 		while(count<noOfEmailIds)
 		{
 			count++;
-			emailIds.add(count+"-"+toAddress);
+			emailIds.add(count+"--"+toAddress);
 		}
 		
 		StringBuilder mailIds = new StringBuilder();
@@ -68,20 +72,4 @@ public class EmailIdGenerator
 			return null;
 	}
 	
-	public static List<String> toEmailStringList(String toAddress, int noOfEmailIds)
-	{
-		List<String> emailIds = new ArrayList<String>();
-		int count = 0;
-		while(count<noOfEmailIds)
-		{
-			count++;
-			emailIds.add(toAddress);
-		}
-		
-		if(emailIds != null && emailIds.size() > 0)
-			return emailIds;
-		else
-			return null;
-		
-	}
 }

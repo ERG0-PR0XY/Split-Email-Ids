@@ -1,5 +1,8 @@
 package com.splitemailaddress.emailidspliter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,38 +13,40 @@ public class SplitEmailListString {
 
 	public static void splitEmailList(String to) {
 		boolean flag = false;
-		long count = to.split(",").length / 400;
+		long count = to.split(",").length / 4;
 		/*System.out.println("Count: "+count);*/
-		int lastsize = to.split(",").length % 400;
+		int lastsize = to.split(",").length % 4;
 		System.out.println("Lastsize :"+lastsize);
 		if (lastsize > 0)
 			count++;
 		System.out.println("Count: "+count);
-		String[] toArr = new String[400];
+		String[] toArr = new String[4];
 		String lastIndex = "";
+		List al = new ArrayList();
+		
 		try {
 			for (int i = 1; i <= count; i++) {
 				if (i == count) {
 					if (count == 1) {
-						toArr = (to.toString().split(",", lastsize));
+						toArr = (to.toString().split(", ", lastsize));
 						/*for(String x : toArr)
 							System.out.println("First if's if: "+x);*/
 					} else {
-						toArr = toArr[toArr.length - 1].split(",", lastsize);
+						toArr = toArr[toArr.length - 1].split(", ", lastsize);
 						/*for(String x : toArr)
-							System.out.println("First if's Else: "+x);*/
+						System.out.println("First if's Else: "+x);*/
 					}
 				} else if (i == 1) {
-					toArr = (to.toString().split(", ", 4));
+					toArr = (to.toString().split(", ", 5));
 					lastIndex = toArr[toArr.length-1];
-					toArr[toArr.length-1] = "";
+					toArr[toArr.length-1] = null;
 					flag = true;
 					/*for(String x : toArr)
 						System.out.println("Else if: "+x);*/
 				} else {
-					toArr = toArr[toArr.length - 1].split(", ", 4);
+					toArr = toArr[toArr.length - 1].split(", ", 5);
 					lastIndex = toArr[toArr.length-1];
-					toArr[toArr.length-1] = "";
+					toArr[toArr.length-1] = null;
 					flag = true;
 					/*for(String x : toArr)
 						System.out.println("Else: "+x);*/
@@ -78,8 +83,15 @@ public class SplitEmailListString {
 					}
 				}	*/
 				
+				/*if(toArr.length >0 && toArr[toArr.length - 1] == null){
+					//toArr = toArr[toArr.length-2];
+					Collections.
+				}
+				*/
 				if(flag)
 				{
+					
+					
 					if(!sendMail(toArr))
 					{
 						System.out.println("--------------------------------Success--------------------------------");
@@ -132,9 +144,10 @@ public class SplitEmailListString {
 					//System.out.println("Else: "+to.subList((i-1)*splitSize, ((i-1)*splitSize)+splitSize));
 				}
 				
+				System.out.println("Iterations: "+i);
 				if(!sendMail(toArr))
 				{
-					/*System.out.println("---------------Success---------------");*/
+					System.out.println("---------------Success---------------");
 				}
 
 			}
@@ -145,8 +158,18 @@ public class SplitEmailListString {
 	
 	public static boolean sendMail(String[] to)
 	{
-		/*for(String x : to)
-			System.out.println("To email ids: "+x);*/	
+		try {
+			/*for(String x : to)
+			{
+				System.out.println("To email ids: "+x);	
+			}*/
+		} catch (NullPointerException ne) {
+			return false;
+		} catch (Exception e) {
+			return true;
+		}
+		
+			
 		/*System.out.println("First index: "+to[0]);
 		System.out.println("Last index: "+to[to.length-1]);*/
 		return false;
